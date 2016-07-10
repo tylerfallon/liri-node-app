@@ -99,4 +99,14 @@ var omdbUrl = omdb + movie + omdbTomatoe;
   })
 };
 
-
+// Reads separate random.txt file and searches the Spotify API using that info
+function doRandom() {
+  fs.readFile("./random.txt", "utf8", function(error, data) {
+    if(error) {
+      console.log('Error occurred: ' + error);
+      return;
+    }
+    data = data.split(',');
+    spotifySong(data[1]);
+  })
+};
