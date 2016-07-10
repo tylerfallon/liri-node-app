@@ -10,7 +10,12 @@ switch(command) {
 		getTweets();
 		break;
 	case "spotify-this-song":
-		spotifySong(songName);
+		if (songName) {
+			spotifySong(songName)
+		} 
+		else {
+			spotifySong("what's my age again blink 182")
+		}
 		break;
 	case "movie-this":
 		getMovie();
