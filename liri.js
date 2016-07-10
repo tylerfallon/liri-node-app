@@ -58,7 +58,7 @@ function getTweets() {
   		console.log(myTweet)
   	}
 	});
-}
+};
 
 // Search for a song using the Spotify API
 function spotifySong(songName) {
@@ -75,10 +75,10 @@ function spotifySong(songName) {
       "Link: " + songInfo.preview_url + "\n";
     console.log(spotifyResults);
 	});
-}
+};
 
 // Search for a movie
-function getMovie () {
+function getMovie() {
 var omdb = 'http://www.omdbapi.com/?t=';
 var omdbTomatoe = '&y=&plot=short&r=json&tomatoes=true';
 var omdbUrl = omdb + movie + omdbTomatoe;
@@ -99,4 +99,14 @@ var omdbUrl = omdb + movie + omdbTomatoe;
   })
 };
 
-
+// Reads separate random.txt file and searches the Spotify API using that info
+function doRandom() {
+	fs.readFile("./random.txt", "utf8", function(error, data) {
+    if(error) {
+      console.log('Error occurred: ' + error);
+      return;
+    }
+    data = data.split(',');
+    spotifySong(data[1]);
+  })
+};
