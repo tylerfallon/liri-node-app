@@ -1,12 +1,17 @@
+//List of required modules for API calls
 var keys = require('./keys.js');
 var fs = require('fs');
 var Twitter = require('twitter');
 var spotify = require('spotify');
+var request = require('request');
+
+// Variables to help store user input
 var command = process.argv[2];
 var songName = process.argv[3];
 var movieInput = process.argv.slice(2);
-var request = require('request');
 
+
+// Switch case that deals with different user inputs
 switch(command) {
 	case "my-tweets":
 		getTweets();
@@ -20,13 +25,21 @@ switch(command) {
 		}
 		break;
 	case "movie-this":
+		if (movieInput[1]) {	
+		var movie = movieInput[1];	
 		getMovie();
+		}
+		else {
+			movie = 'Mr. Nobody'
+			getMovie()
+		}
 		break;
 	case "do-what-it-says":
 		doRandom();
 		break;
 }
 
+// Get my 20 most recent tweets from the Twitter API
 function getTweets() {
 	var client = new Twitter({
   consumer_key: keys.twitterKeys.consumer_key,
@@ -47,7 +60,7 @@ function getTweets() {
 	});
 }
 
-
+// Search for a song using the Spotify API
 function spotifySong(songName) {
 	spotify.search({ type: 'track', query: songName }, function(err, data) {
     if ( err ) {
@@ -64,9 +77,8 @@ function spotifySong(songName) {
 	});
 }
 
-
+// Search for a movie
 function getMovie () {
-var movie = movieInput[1];
 var omdb = 'http://www.omdbapi.com/?t=';
 var omdbTomatoe = '&y=&plot=short&r=json&tomatoes=true';
 var omdbUrl = omdb + movie + omdbTomatoe;
@@ -86,3 +98,5 @@ var omdbUrl = omdb + movie + omdbTomatoe;
     }
   })
 };
+
+
