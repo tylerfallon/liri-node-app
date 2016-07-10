@@ -21,16 +21,20 @@ switch(command) {
 
 function getTweets() {
 	var client = new Twitter({
-  consumer_key: '',
-  consumer_secret: '',
-  access_token_key: '',
-  access_token_secret: ''
+  consumer_key: keys.twitterKeys.consumer_key,
+    consumer_secret: keys.twitterKeys.consumer_secret,
+    access_token_key:  keys.twitterKeys.access_token_key,
+    access_token_secret: keys.twitterKeys.access_token_secret   
 	});
  
-	var params = {screen_name: 'nodejs'};
+	var params = {screen_name: 'tylerfallon'};
 	client.get('statuses/user_timeline', params, function(error, tweets, response){
   	if (!error) {
     	console.log(tweets);
+  	}
+  	for (var i=0; i<tweets.length; i++) {
+  		var myTweet = tweets[i].text + '\n' + tweets[i].created_at + '\n';
+  		console.log(myTweet)
   	}
 	});
 }
