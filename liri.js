@@ -4,6 +4,8 @@ var Twitter = require('twitter');
 var spotify = require('spotify');
 var command = process.argv[2];
 var songName = process.argv[3];
+var movieInput = process.argv.slice(2);
+var request = require('request');
 
 switch(command) {
 	case "my-tweets":
@@ -59,9 +61,28 @@ function spotifySong(songName) {
       "Album: " + songInfo.album.name + "\n" +
       "Link: " + songInfo.preview_url + "\n";
     console.log(spotifyResults);
- 
-});
-
+	});
 }
 
-	
+
+function getMovie () {
+var movie = movieInput[1];
+var omdb = 'http://www.omdbapi.com/?t=';
+var omdbTomatoe = '&y=&plot=short&r=json&tomatoes=true';
+var omdbUrl = omdb + movie + omdbTomatoe;
+  request(omdbUrl, function (error, response, body) {
+    if (!error && response.statusCode == 200) {
+      var results = 
+        "Title: " + JSON.parse(body)["Title"] + "\n" +
+        "Year: " + JSON.parse(body)["Year"] + "\n" +
+        "Rating: " + JSON.parse(body)["Rated"] + "\n" +
+        "Country: " + JSON.parse(body)["Country"] + "\n" +
+        "Language: " + JSON.parse(body)["Language"] + "\n" +
+        "Plot: " + JSON.parse(body)["Plot"] + "\n" +
+        "Actors: " + JSON.parse(body)["Actors"] + "\n" +
+        "Rotten Tomatoes Rating: " + JSON.parse(body)["tomatoRating"] + "\n" +
+        "Rotten Tomato URL: " + JSON.parse(body)["tomatoURL"] + "\n";
+      console.log(results);
+    }
+  })
+};
